@@ -1,5 +1,0 @@
-Erstelle eine Musikdatenbank mit 100 Songbeschreibungen. Jede Beschreibung soll aus einem einzigen Satz bestehen und maximal 200 Wörter umfassen.
-Sie soll sowohl den Songtitel als auch den Künstlernamen enthalten. Beschreibe kurz das Thema des Songs und die Stimmung (z. B. fröhlich, melancholisch,
-energetisch etc.). Die Songauswahl soll vielfältig sein – verschiedene Künstler, Genres und Jahrzehnte, um eine breite Diversität zu gewährleisten.
-Jede Beschreibung soll durch einen Zeilenumbruch separiert werden. Es sollen keine Auflistungen oder Nummerierungen enthalten sondern ausschließlich die Beschreibung.
-Bitte erstelle direkt alle 100 Beschreibungen ohne einer nachfrage.
