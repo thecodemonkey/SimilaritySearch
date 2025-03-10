@@ -1,0 +1,188 @@
+body {
+  background: linear-gradient(to bottom right, #333 0%, #222 50%, #111 100%);
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  color: #eee;
+
+}
+
+body > h1{
+  margin-top: 100px;
+  font-family: monospace;
+  font-weight: 100;
+  font-size: 1rem;
+  color: #434343;
+}
+
+body > div {
+  position: relative;
+  max-width: 700px;
+  width: 50%;
+  margin: 25px 50px;
+}
+
+.inp-fld{
+  position: relative;
+  display: flex;
+}
+
+.inp-fld input {
+  padding: 25px;
+  background-color: #00000050;
+  font-size: 1rem;
+  width: 100%;
+  color:#60f3f4;
+  font-family: monospace;
+  outline: none;
+  transition: 0.3s;
+  border: 1px solid transparent;
+}
+
+input:focus{
+  /*box-shadow: 2px -10px 30px 0 #008d936b;*/
+  background-color: #000000a0;
+  border: 1px solid #47f7ff9c;
+}
+
+.inp-fld input::placeholder {
+  font-style: italic!important;
+  color: #555;
+  font-size: .9rem;
+}
+
+#result {
+  color: #ccc;
+  padding: 0;
+  margin: -1000px 0 0 0;
+  background-color: #313131;
+  transition: all 1s ease-out;
+  opacity: 0;
+}
+
+#result.on {
+  padding: 20px 0;
+  margin: 0;
+  opacity: 1;
+}
+
+#result li span{
+  opacity: 1;
+}
+
+#result > li > span.id {
+  color: #ffffff;
+  opacity: 1;
+  font-weight: bold;
+  width: 80px;
+  min-width: 80px;
+  display: inline-block;
+  text-align: right;
+}
+
+#result > li {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 25px;
+  padding: 20px 25px;
+  font-family: monospace;
+  border-bottom: 1px solid #000;
+  color: #ddd;
+}
+
+#result > li:last-child {
+  border-bottom: none;
+}
+
+#result > li > span > i {
+  opacity: .7;
+  font-size: .8rem;
+}
+
+#result > li > i {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#result > li > i.top {
+  color: #60f3f4;
+}
+
+#result > li > i.middle {
+  color: #f1ff8d;
+}
+
+#result > li > i.low {
+  color: #fd7575;
+}
+
+.res-outer {
+  overflow: hidden;
+  box-shadow: 5px 5px 25px 0 #00000050;
+}
+
+
+#sr_ldr{
+  position: absolute;
+  background-color: #ffffff20;
+  height: 2px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#sr_ldr.load{
+  opacity: 1;
+}
+
+#sr_ldr > span {
+  background-color: #4a94ab;
+  width: 0;
+  height: 2px;
+  position: absolute;
+  left: 0;
+  transition: width .5s;
+}
+
+#sr_ldr.load > span {
+  animation: expandWidth 1.5s linear forwards;
+}
+
+input:has(+ #sr_ldr.load) {
+  animation: glowInput 1.5s linear forwards;
+}
+
+
+#sr_ldr.done > span {
+  width: 100%;
+}
+
+@keyframes expandWidth {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+@keyframes glowInput {
+  0% {
+    box-shadow: 2px -10px 30px 0 #008d9300;
+  }
+  100% {
+    box-shadow: 2px -10px 30px 0 #008d9380;
+  }
+}
