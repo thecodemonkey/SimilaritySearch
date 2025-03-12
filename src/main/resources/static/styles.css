@@ -11,7 +11,6 @@ body {
   align-items: center;
 
   color: #eee;
-
 }
 
 body > h1{
@@ -95,7 +94,7 @@ input:focus{
   padding: 20px 25px;
   font-family: monospace;
   border-bottom: 1px solid #000;
-  color: #ddd;
+  color: #9dcdd2;
 }
 
 #result > li:last-child {

@@ -27,7 +27,7 @@ class EmbeddingsService(
     private val songsEmbeddingsRes: Resource? = null
 
     @PostConstruct
-    fun loadResourceFile() {
+    fun init() {
         loadVectorData();
         //createVectorData()
     }
