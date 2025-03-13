@@ -32,3 +32,15 @@ Once the application is running, the API is available at `http://localhost:8080`
 curl http://localhost:8080/embeddings?text=Hello
 ```
 
+
+## Windows WSL2 
+
+wsl has its own IP, which changes with every start
+
+inside wsl terminal: 
+    
+    ip addr show eth0
+
+grab the specific ip and open in browser on your host machine:
+    
+    curl http://172.20.45.2:7070

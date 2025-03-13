@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:7070';
+const BASE_URL = ''; //http://localhost:7070';
 
 async function start() {
   let debounceTimer;
@@ -66,6 +66,27 @@ function getConfCls(conf) {
   return 'low';
 }
 
+async function startSpeechRecognition() {
+  if ('webkitSpeechRecognition' in window && 'SpeechRecognition' in window) {
+
+    const recognition = new (window.SpeechRecognition
+                          || window.webkitSpeechRecognition)();
+    recognition.lang = 'en-GB';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.start();
+
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      document.getElementById('output').textContent = "🗣 " + transcript;
+    };
+
+    recognition.onerror = (event) => {
+      document.getElementById('output').textContent = "Fehler: " + event.error;
+    };
+  }
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
   await start();

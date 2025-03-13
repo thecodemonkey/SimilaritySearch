@@ -37,3 +37,12 @@ kotlin {
 		freeCompilerArgs.addAll("-Xjsr305=strict")
 	}
 }
+
+tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+	archiveFileName.set("similarity-search.jar")
+}
+
+tasks.register<Exec>("dockerBuild") {
+	dependsOn("bootJar")
+	commandLine("docker", "build", "-t", "similarity-search", ".")
+}

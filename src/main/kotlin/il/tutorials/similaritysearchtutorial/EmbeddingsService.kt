@@ -16,7 +16,7 @@ import kotlin.io.path.pathString
 
 @Service
 class EmbeddingsService(
-    val embeddingModel: EmbeddingModel,
+    val model: EmbeddingModel,
     val store: VectorStore
 ) {
 
@@ -32,7 +32,7 @@ class EmbeddingsService(
         //createVectorData()
     }
 
-    fun embed(text: String) = embeddingModel.embed(text)
+    fun embed(text: String) = model.embed(text)
 
     fun similar(text: String) = store.similaritySearch(text)
 
@@ -40,7 +40,7 @@ class EmbeddingsService(
         val raw = songsRes!!.getContentAsString(StandardCharsets.UTF_8)
         val docs = raw.split("\n")
                       .filter { it.isNotBlank() }
-                      .map { Document(it, mapOf("short" to it.substring(0, 20))) }
+                      .map { Document(it) }
 
         store.add(docs)
 
@@ -49,7 +49,7 @@ class EmbeddingsService(
     }
 
     fun loadVectorData() {
-        (store as SimpleVectorStore).load(songsEmbeddingsRes!!.file);
+        (store as SimpleVectorStore).load(songsEmbeddingsRes!!);
     }
 
 }
