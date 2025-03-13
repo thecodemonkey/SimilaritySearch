@@ -37,6 +37,9 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      - name: Instll Gradle Wrapper
+        run: ./gradlew wrapper          
+
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
