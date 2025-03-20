@@ -1,5 +1,6 @@
 # Similarity Search with Spring AI
 
+<a href="https://simsearch.thecodemonkey.de" target="_blank">Demo</a>
 
 
 ## Table of Contents
