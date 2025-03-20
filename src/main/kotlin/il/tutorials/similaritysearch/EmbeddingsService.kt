@@ -1,4 +1,4 @@
-package il.tutorials.similaritysearchtutorial
+package il.tutorials.similaritysearch
 
 import jakarta.annotation.PostConstruct
 import org.springframework.ai.document.Document
@@ -37,10 +37,10 @@ class EmbeddingsService(
     fun similar(text: String) = store.similaritySearch(text)
 
     fun createVectorData() {
-        val raw = songsRes!!.getContentAsString(StandardCharsets.UTF_8)
-        val docs = raw.split("\n")
-                      .filter { it.isNotBlank() }
-                      .map { Document(it) }
+        val docs = songsRes!!.getContentAsString(StandardCharsets.UTF_8)
+                             .split("\n")
+                             .filter { it.isNotBlank() }
+                             .map { Document(it) }
 
         store.add(docs)
 

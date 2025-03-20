@@ -3,21 +3,44 @@
   <head>
     <meta charset="UTF-8">
     <title>Similarity Search (Embeddings Tutorial)</title>
-    <link href="styles.css" rel="stylesheet" />
+
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/styles.mobile.css" rel="stylesheet" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   </head>
   <body>
       <h1>Similarity Search - Embeddings Tutorial</h1>
 
       <div>
         <div class="inp-fld">
-          <input id="search" type="text" placeholder="sample: show me feel-good songs"/>
+          <input id="search" type="text" placeholder="sample: show me good mood songs"/>
           <span id="sr_ldr"><span></span></span>
+          <img class="mic" src="img/icon-mic.svg" id="micBtn"/>
+          <div class="lang">
+            <span class="de">de</span> | <span class="en active">en</span>
+          </div>
         </div>
         <div class="res-outer">
           <ul id="result"></ul>
         </div>
       </div>
 
-      <script src="script.js"></script>
+      <div class="footer">
+        built by TheCodemonkey 🍌 | <a href="https://github.com/thecodemonkey/SimilaritySearchTutorial/" target="_blank">GitHub</a>
+      </div>
+
+
+
+<!--      <script type="module">-->
+<!--        import {franc, francAll} from 'https://esm.sh/franc@6?bundle'-->
+
+<!--        document.getElementById("search").addEventListener('input', (e) => {-->
+<!--          console.log("lang: ", francAll(e.target.value));-->
+<!--        });-->
+<!--      </script>-->
+
+      <script src="js/speech.js"></script>
+      <script src="js/script.js"></script>
   </body>
 </html>

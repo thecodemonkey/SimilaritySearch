@@ -40,6 +40,7 @@ kotlin {
 
 tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
 	archiveFileName.set("similarity-search.jar")
+	//duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 tasks.register<Exec>("dockerBuild") {

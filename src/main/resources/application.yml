@@ -11,12 +11,11 @@ spring:
           uri: "https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/main/tokenizer.json"
 
 
+# classpath:/model/model.onnx
+# classpath:/model/tokenizer.json
 
-
-
-
-
-
+# "https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/main/onnx/model.onnx"
+# "https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2/resolve/main/tokenizer.json"
 
 
 #  "https://huggingface.co/onnx-community/gte-multilingual-base/resolve/main/tokenizer.json"

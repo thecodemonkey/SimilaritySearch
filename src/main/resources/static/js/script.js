@@ -1,12 +1,26 @@
 const BASE_URL = ''; //http://localhost:7070';
 
+var LANGUAGE = 'en';
+
 async function start() {
+  initText2Speech(async (term) => {
+    if (term && term.trim().length > 0) {
+      await onSearchTerm(term);
+    }
+  });
+
+  await registerLang();
+
+
   let debounceTimer;
   const elmLoader = document.getElementById('sr_ldr');
   const searchInput = document.getElementById('search');
   const resultElm = document.getElementById('result');
 
-  searchInput.addEventListener('keyup', (e) => {
+  const onSearch = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+
     resultElm.classList.remove('on');
 
     clearTimeout(debounceTimer);
@@ -15,17 +29,55 @@ async function start() {
       const val = e.target.value;
 
       if (val && val.length > 2) {
-        elmLoader.classList.add('load');
-        const result = await callSearch(e.target.value);
-
-        setTimeout(async () => {
-          elmLoader.classList.remove('load');
-          await receiveResult(result);
-        }, 1000);
-
+        await onSearchTerm(e.target.value)
       }
     }, 1000);
-  });
+  }
+
+  searchInput.addEventListener('keyup', onSearch);
+  searchInput.addEventListener('blur', onSearch);
+}
+
+async function registerLang(){
+  document.querySelectorAll('.lang span').forEach((e) => {
+    e.addEventListener('click', (lem) => {
+
+      LANGUAGE = lem.target.textContent.trim();
+
+      console.log('select: ' + LANGUAGE);
+      console.log('select: ' + lem.target.classList);
+
+      if (LANGUAGE === 'en') {
+        document.querySelector('.lang span.de').classList.remove('active');
+      } else {
+        document.querySelector('.lang span.en').classList.remove('active');
+      }
+
+      console.log('sent lang to: ' + LANGUAGE);
+
+      recognition.stop();
+
+      initText2Speech(async (term) => {
+        if (term && term.trim().length > 0) {
+          await onSearchTerm(term);
+        }
+      });
+
+      lem.target.classList.add('active');
+    })
+  })
+}
+
+async function onSearchTerm(term){
+  const elmLoader = document.getElementById('sr_ldr');
+
+  elmLoader.classList.add('load');
+  const result = await callSearch(term);
+
+  setTimeout(async () => {
+    elmLoader.classList.remove('load');
+    await receiveResult(result);
+  }, 1000);
 }
 
 async function callSearch(val) {
@@ -44,10 +96,18 @@ async function callSearch(val) {
 
 async function receiveResult(val) {
 
+  const relMultiplier = 1.2;
+
   if (val && val.length > 0) {
-    const items = val.map(v =>
-        `<li><span>${v.text}</span> <i class="${getConfCls(v.score)}">${Math.round(v.score * 100)}%</i></li>`
-    );
+    const items = val.map(v => {
+      // the score should be artificially increased with a multiplier to make
+      // the relevance more user-friendly
+      let score = Math.round(v.score * relMultiplier * 100);
+      if (score > 100) score = 100;
+
+      return `<li><span>${v.text}</span> <i class="${getConfCls(
+          v.score)}">${score}%</i></li>`
+    });
 
     const resultElm = document.getElementById('result');
 
