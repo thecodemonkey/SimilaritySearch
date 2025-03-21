@@ -2,12 +2,17 @@ const BASE_URL = ''; //http://localhost:7070';
 
 var LANGUAGE = 'en';
 
+let lastTerm = '';
+let isbt = true;
+
+
 async function start() {
   initText2Speech(async (term) => {
     if (term && term.trim().length > 0) {
       await onSearchTerm(term);
     }
   });
+  updateClose('');
 
   await registerLang();
 
@@ -16,26 +21,39 @@ async function start() {
   const elmLoader = document.getElementById('sr_ldr');
   const searchInput = document.getElementById('search');
   const resultElm = document.getElementById('result');
+  const closeElm = document.getElementsByClassName('close')[0];
 
   const onSearch = (e) => {
     e.stopPropagation();
     e.preventDefault();
 
-    resultElm.classList.remove('on');
+    const term = e.target.value;
 
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(async () => {
 
+      if (lastTerm === term.trim().toLowerCase()) return;
+      resultElm.classList.remove('on');
+
       const val = e.target.value;
 
       if (val && val.length > 2) {
-        await onSearchTerm(e.target.value)
+
+        lastTerm = term.toLowerCase().trim();
+
+        await onSearchTerm(term)
       }
     }, 1000);
   }
 
   searchInput.addEventListener('keyup', onSearch);
   searchInput.addEventListener('blur', onSearch);
+
+  closeElm.addEventListener('click', () => {
+    searchInput.value = '';
+    resultElm.classList.remove('on');
+    updateClose('');
+  })
 }
 
 async function registerLang(){
@@ -69,10 +87,15 @@ async function registerLang(){
 }
 
 async function onSearchTerm(term){
+
+  updateClose(term);
+
   const elmLoader = document.getElementById('sr_ldr');
 
   elmLoader.classList.add('load');
   const result = await callSearch(term);
+
+  //lastTerm = term.toLowerCase().trim();
 
   setTimeout(async () => {
     elmLoader.classList.remove('load');
@@ -82,6 +105,9 @@ async function onSearchTerm(term){
 
 async function callSearch(val) {
   try {
+
+    // if (isbt) return;
+
     const response = await fetch(`${BASE_URL}/similarity?text=` + encodeURIComponent(val), {
       method: 'GET',
     });
@@ -126,6 +152,19 @@ function getConfCls(conf) {
   return 'low';
 }
 
+function updateClose(term) {
+  const closeElm = document.getElementsByClassName('close')[0];
+  const searchInput = document.getElementById('search');
+
+  if (term.trim().length > 0) {
+    closeElm.classList.remove('off');
+
+  } else {
+    closeElm.classList.add('off');
+    searchInput.focus();
+  }
+}
+
 async function startSpeechRecognition() {
   if ('webkitSpeechRecognition' in window && 'SpeechRecognition' in window) {
 
@@ -146,6 +185,14 @@ async function startSpeechRecognition() {
       document.getElementById('output').textContent = "Fehler: " + event.error;
     };
   }
+}
+
+function cibt() {
+  document.addEventListener('mousemove', () => isbt = false);
+  document.addEventListener('keydown', () => isbt = false);
+  document.addEventListener('touchstart', () => isbt = false);
+  document.addEventListener('scroll', () => isbt = false);
+  document.addEventListener('focusin', () => isbt = false);
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
